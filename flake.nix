@@ -1,103 +1,59 @@
 {
-  description = "Will Sather MacOS Nix System flake";
+  description = "Will Sather Laptop Configuration for macOS";
 
+  # the nixConfig here only affects the flake itself, not the system configuration!
+  nixConfig = {
+    substituters = [
+      # Query the mirror of USTC first, and then the official cache.
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://cache.nixos.org"
+    ];
+  };
+
+  # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
+  # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
-  let
-    configuration = { pkgs, ... }: {
-      environment.systemPackages =
-        [ 
-          pkgs.vim
-          pkgs.lazydocker # Docker TUI
-          pkgs.lazygit # Git TUI
-          pkgs.pyenv # Python version manager
-          pkgs.gh # GitHub CLI
-          pkgs.go # Go programming language
-          pkgs.kubectl # Kubernetes CLI
-          pkgs.kubectx # Kubernetes context switcher
-          pkgs.delta # Terminal git diff viewer with syntax highlighting
-          pkgs.curl # Command line tool for transferring data with URL syntax
-          pkgs.jq # Command line JSON processor
-          pkgs.yq # Command line YAML processor
-          pkgs.vscode # Visual Studio Code
-          pkgs.neovim # Vim-fork focused on extensibility and usability
-          pkgs.k9s # Kubernetes CLI to manage your clusters in styles
-          pkgs.python3 # Python 3 programming language
-          pkgs.rustc # Rust programming language
-          pkgs.rustup # Rust toolchain installer
-          pkgs.lorri # Nix shell manager
-          pkgs.htop # Interactive process viewer
-          pkgs.httpie # Interactive process viewer
-          pkgs.tree # Display directories as trees
-          pkgs.jetbrains-mono # JetBrains Mono font
-        ];
+  # The `outputs` function will return all the build results of the flake.
+  # A flake can have many use cases and different types of outputs,
+  # parameters in `outputs` are defined in `inputs` and can be referenced by their names.
+  # However, `self` is an exception, this special parameter points to the `outputs` itself (self-reference)
+  # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    darwin,
+    ...
+  }: let
+    username = "satherw"; # FIXME: update to username
+    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+    hostname = "JXDJLQC9C2"; # FIXME: update to machine hostname
 
-      # allowUnfree is required to install some packages that are not "free" software.
-      nixpkgs.config.allowUnfree = true;
-
-      # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.zsh.enable = true;  # default shell on catalina
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Enable sudo authentication using fingerprint biometrics
-      security.pam.enableSudoTouchIdAuth = true;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      system.stateVersion = 4;
-
-      system.defaults = {
-        dock.mru-spaces = false; # Most Recently Used spaces.
-        finder.AppleShowAllExtensions = true;
-        finder.FXPreferredViewStyle = "icnv"; # icon view. Other options are: Nlsv (list), clmv (column), Flwv (cover flow)
-        screencapture.location = "~/Pictures/screenshots";
-        screensaver.askForPasswordDelay = 10; # in seconds
-
-        dock.persistent-apps = [
-          "/System/Applications/Launchpad.app"
-          "/Applications/Google Chrome.app"
-          "/Applications/Slack.app"
-          "/Applications/IntelliJ IDEA Ultimate.app"
-          "/Applications/iTerm.app"
-          "/System/Applications/System Settings.app"
-        ];
-
-        # keyboard repeat
-        NSGlobalDomain = {
-          KeyRepeat = 1;
-          InitialKeyRepeat = 15;
+    specialArgs =
+      inputs
+      // {
+        inherit username hostname;
       };
+  in {
+    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+      inherit system specialArgs;
+      modules = [
+        ./modules/core.nix
+        ./modules/system.nix
+        ./modules/apps.nix
+        # ./modules/git.nix
+
+        ./modules/host-users.nix
+      ];
     };
 
-    nixpkgs.hostPlatform = "aarch64-darwin";
-
-    nix.extraOptions = ''
-      extra-platforms = x86_64-darwin aarch64-darwin
-    '';
-
-  };
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."JXDJLQC9C2" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
-    };
-
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."JXDJLQC9C2".pkgs;
+    # nix code formatter
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }
