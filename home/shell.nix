@@ -2,9 +2,14 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+
     shellAliases = {
        ll = "ls -l";
        lsa = "ls -la";
+
+       pn = "pnpm";
+       lzd = "lazydocker";
+       kp = "killport";
     };
 
     oh-my-zsh = {
@@ -12,10 +17,6 @@
       plugins = [ "git" ];
       theme = "robbyrussell";
     };
-
-    initExtra = ''
-      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-    '';
 
     plugins = [
       {
@@ -28,6 +29,19 @@
         };
       }
     ];
+
+    initExtra = ''
+          export PATH=$PATH:$HOME/go/bin
+          export PATH=$PATH:$HOME/.cargo/bin
+          export PATH=$PATH:$HOME/.sst/bin
+
+          # killport function
+          killport() {
+            for port in "$@"; do
+              lsof -ti:$port | xargs kill -9
+            done
+          }
+        '';
   };
 
   home.shellAliases = {
