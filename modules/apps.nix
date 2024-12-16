@@ -16,29 +16,18 @@
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
-    git
     vim
     lazydocker
     lazygit
     pyenv
     gh
     go
-    kubectl
-    kubectx
-    delta
-    curl
-    jq
-    yq
     vscode
-    neovim
     k9s
     python3
     rustc
     rustup
     lorri
-    htop
-    httpie
-    tree
     jetbrains-mono
     slack
   ];
@@ -74,7 +63,6 @@
 #      "curl"
 #      "jq"
 #      "yq"
-#      "neovim"
 #      "k9s"
 #      "python3"
 #      "rust"

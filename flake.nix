@@ -13,9 +13,15 @@
   # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixos-unstable"; # FIXME: lock once 25.05-pre is released
+
     darwin = {
       url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11"; # FIXME: Update once 25 is available
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
   };
@@ -29,6 +35,7 @@
     self,
     nixpkgs,
     darwin,
+    home-manager,
     ...
   }: let
     username = "satherw"; # FIXME: update to username
@@ -47,9 +54,15 @@
         ./modules/core.nix
         ./modules/system.nix
         ./modules/apps.nix
-        # ./modules/git.nix
-
         ./modules/host-users.nix
+
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.users.${username} = import ./home;
+        }
       ];
     };
 
