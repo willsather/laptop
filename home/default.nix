@@ -1,7 +1,7 @@
 { username, ... }:
 
 {
-  # import sub modules
+  # Import submodules
   imports = [
     ./shell.nix
     ./core.nix

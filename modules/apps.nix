@@ -17,69 +17,48 @@
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
     vim
+    bruno
     lazydocker
     lazygit
-    pyenv
     gh
     go
-    vscode
-    k9s
     python3
     rustc
     rustup
-    lorri
     jetbrains-mono
     slack
   ];
 
-  # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
-  # TODO: Uncomment and start fully using homebrew eventually
+  # FIXME: To make this work, homebrew need to be installed manually, see https://brew.sh
   #
   # The apps installed by homebrew are not managed by nix, and not reproducible!
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
-#  homebrew = {
-#    enable = true;
-#
-#    onActivation = {
-#      autoUpdate = false;
-#    };
-#
-#    taps = [
-#      "homebrew/services"
-#    ];
-#
-#    # `brew install`
-#    brews = [
-#      "vim"
-#      "lazydocker"
-#      "lazygit"
-#      "pyenv"
-#      "git"
-#      "gh"
-#      "go"
-#      "kubectl"
-#      "kubectx"
-#      "delta"
-#      "curl"
-#      "jq"
-#      "yq"
-#      "k9s"
-#      "python3"
-#      "rust"
-#      "htop"
-#      "httpie"
-#      "tree"
-#    ];
-#
-#    # `brew install --cask`
-#    casks = [
+  homebrew = {
+    enable = true;
+
+    onActivation = {
+      autoUpdate = false;
+    };
+
+    taps = [
+      "homebrew/services"
+    ];
+
+    # `brew install`
+    brews = [
+    ];
+
+    # `brew install --cask`
+    # FIXME: uninstall and reinstall these apps with brew
+    casks = [
 #       "1password"
-#       "1password-cli"
+       "1password-cli"
 #       "google-chrome"
 #       "slack"
-#       "visual-studio-code"
+       "jetbrains-toolbox"
+       "visual-studio-code"
 #       "font-jetbrains-mono"
 #       "zoom"
-#    ];
-#  };
+    ];
+  };
 }
