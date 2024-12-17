@@ -39,17 +39,17 @@
     ...
   }: let
     username = "satherw"; # FIXME: update to username
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+    architecture = "aarch64-darwin"; # FIXME: set system architecture as `aarch64-darwin` or `x86_64-darwin`
     hostname = "JXDJLQC9C2"; # FIXME: update to machine hostname
 
     specialArgs =
       inputs
       // {
-        inherit username hostname;
+        inherit username hostname architecture;
       };
   in {
     darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
-      inherit system specialArgs;
+      inherit specialArgs;
       modules = [
         ./modules/core.nix
         ./modules/system.nix
@@ -67,6 +67,6 @@
     };
 
     # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    formatter.${architecture} = nixpkgs.legacyPackages.${architecture}.alejandra;
   };
 }

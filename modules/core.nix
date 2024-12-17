@@ -1,6 +1,7 @@
 {
   self,
   pkgs,
+  architecture,
   ...
 }: {
   nix.settings = {
@@ -18,7 +19,7 @@
     builders-use-substitutes = true;
   };
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = architecture;
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;

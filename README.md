@@ -40,7 +40,7 @@ then execute a single command to apply the configuration.
    Example:
    ```
     username = "satherw"; # FIXME: update to username
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+    system = "aarch64-darwin"; # FIXME: set system architecture as aarch64-darwin or x86_64-darwin
     hostname = "JXDJLQC9C2"; # FIXME: update to machine hostname
    ```
 
