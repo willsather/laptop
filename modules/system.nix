@@ -1,13 +1,12 @@
-{ pkgs, ... }:
-
-  ###################################################################################
-  #
-  #  macOS's System configuration
-  #
-  #  All the configuration options are documented here:
-  #    https://daiderd.com/nix-darwin/manual/index.html#sec-options
-  #
-  ###################################################################################
+{pkgs, ...}:
+###################################################################################
+#
+#  macOS's System configuration
+#
+#  All the configuration options are documented here:
+#    https://daiderd.com/nix-darwin/manual/index.html#sec-options
+#
+###################################################################################
 {
   system = {
     # Used for backwards compatibility, please read the changelog before changing.
@@ -21,11 +20,11 @@
     '';
 
     keyboard = {
-       enableKeyMapping = true;
+      enableKeyMapping = true;
 
-       # NOTE: do NOT support remap capslock to both control and escape at the same time
-       remapCapsLockToControl = false;  # remap caps lock to control, useful for emac users
-       remapCapsLockToEscape  = true;   # remap caps lock to escape, useful for vim users
+      # NOTE: do NOT support remap capslock to both control and escape at the same time
+      remapCapsLockToControl = false; # remap caps lock to control, useful for emac users
+      remapCapsLockToEscape = true; # remap caps lock to escape, useful for vim users
     };
 
     defaults = {
@@ -39,12 +38,12 @@
       # customize finder
       finder = {
         AppleShowAllFiles = true; # show hidden files
-        ShowPathbar = true;  # show path bar
-        ShowStatusBar = true;  # show status bar
-        QuitMenuItem = true;  # enable quit menu item
+        ShowPathbar = true; # show path bar
+        ShowStatusBar = true; # show status bar
+        QuitMenuItem = true; # enable quit menu item
 
-        FXEnableExtensionChangeWarning = false;  # disable warning when changing file extension
-        _FXShowPosixPathInTitle = true;  # show full path in finder title
+        FXEnableExtensionChangeWarning = false; # disable warning when changing file extension
+        _FXShowPosixPathInTitle = true; # show full path in finder title
       };
 
       screencapture.location = "~/Pictures/screenshots"; # screenshot location
@@ -52,60 +51,60 @@
 
       # customize dock
       dock = {
-          autohide = false;
-          show-recents = false;
-          mru-spaces = false;
+        autohide = false;
+        show-recents = false;
+        mru-spaces = false;
 
-          persistent-apps = [
-            "/System/Applications/Launchpad.app"
-            "/Applications/Google Chrome.app"
-            "/Applications/Slack.app"
-            "/Applications/IntelliJ IDEA Ultimate.app"
-            "/Applications/iTerm.app"
-            "/System/Applications/System Settings.app"
-          ];
+        persistent-apps = [
+          "/System/Applications/Launchpad.app"
+          "/Applications/Google Chrome.app"
+          "/Applications/Slack.app"
+          "/Applications/IntelliJ IDEA Ultimate.app"
+          "/Applications/iTerm.app"
+          "/System/Applications/System Settings.app"
+        ];
       };
 
       # customize trackpad
       trackpad = {
         Clicking = true; # enable tap to click
         FirstClickThreshold = 1; # medium click threshold
-        TrackpadRightClick = true;  # enable two finger right click
-        TrackpadThreeFingerDrag = true;  # enable three finger drag
+        TrackpadRightClick = true; # enable two finger right click
+        TrackpadThreeFingerDrag = true; # enable three finger drag
         TrackpadThreeFingerTapGesture = 0; # disable data detector
       };
 
       NSGlobalDomain = {
-        "com.apple.swipescrolldirection" = false;  # enable natural scrolling
+        "com.apple.swipescrolldirection" = false; # enable natural scrolling
         "com.apple.trackpad.trackpadCornerClickBehavior" = 1; # enable bottom right right-click
         "com.apple.trackpad.forceClick" = true; # enable force touch
 
-        "com.apple.sound.beep.feedback" = 0;  # disable beep sound when pressing volume up/down key
-        AppleKeyboardUIMode = 3;  # Mode 3 enables full keyboard control.
-        ApplePressAndHoldEnabled = true;  # enable press and hold
+        "com.apple.sound.beep.feedback" = 0; # disable beep sound when pressing volume up/down key
+        AppleKeyboardUIMode = 3; # Mode 3 enables full keyboard control.
+        ApplePressAndHoldEnabled = true; # enable press and hold
 
-        InitialKeyRepeat = 15;  # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
-        KeyRepeat = 1;  # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
+        InitialKeyRepeat = 15; # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
+        KeyRepeat = 1; # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
 
-        NSAutomaticCapitalizationEnabled = false;  # disable auto capitalization
-        NSAutomaticDashSubstitutionEnabled = false;  # disable auto dash substitution
-        NSAutomaticPeriodSubstitutionEnabled = false;  # disable auto period substitution
+        NSAutomaticCapitalizationEnabled = false; # disable auto capitalization
+        NSAutomaticDashSubstitutionEnabled = false; # disable auto dash substitution
+        NSAutomaticPeriodSubstitutionEnabled = false; # disable auto period substitution
 
         # expand save panel by default
         NSNavPanelExpandedStateForSaveMode = true;
         NSNavPanelExpandedStateForSaveMode2 = true;
       };
     };
-   };
+  };
 
-    # customize fonts
-    fonts = {
-      packages = with pkgs; [
-        jetbrains-mono
-        font-awesome
-        nerd-fonts.jetbrains-mono
-      ];
-    };
+  # customize fonts
+  fonts = {
+    packages = with pkgs; [
+      jetbrains-mono
+      font-awesome
+      nerd-fonts.jetbrains-mono
+    ];
+  };
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;

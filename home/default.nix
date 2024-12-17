@@ -1,6 +1,4 @@
-{ username, ... }:
-
-{
+{username, ...}: {
   # Import submodules
   imports = [
     ./shell.nix

@@ -1,5 +1,4 @@
-{ pkgs, ...}: {
-
+{pkgs, ...}: {
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -51,14 +50,14 @@
     # `brew install --cask`
     # FIXME: uninstall and reinstall these apps with brew
     casks = [
-#       "1password"
-       "1password-cli"
-#       "google-chrome"
-#       "slack"
-       "jetbrains-toolbox"
-       "visual-studio-code"
-#       "font-jetbrains-mono"
-#       "zoom"
+      # "1password"
+      "1password-cli"
+      # "google-chrome"
+      # "slack"
+      "jetbrains-toolbox"
+      "visual-studio-code"
+      # "font-jetbrains-mono"
+      # "zoom"
     ];
   };
 }
