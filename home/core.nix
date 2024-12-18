@@ -12,6 +12,10 @@
     kubectl # kubernetes
     kubectx # kubernetes context
 
+    # software
+    nodejs
+    pnpm
+
     # nix
     alejandra # formatter
 
