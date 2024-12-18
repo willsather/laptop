@@ -53,6 +53,15 @@ then execute a single command to apply the configuration.
     - Install Nix-Darwin if not already installed.
     - Apply the configurations defined in the flake.
 
+4. Update packages / `flake.lock` as needed:
+   ```bash
+   nix flake update
+   ```
+
+   This will:
+   - Update package versions such that `flake.lock` updates
+
+Note: Afterward, apply the configuration again to ensure local machine is updated.
 
 ## Troubleshooting
 
