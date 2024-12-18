@@ -35,6 +35,10 @@
       export PATH=$PATH:$HOME/.cargo/bin
       export PATH=$PATH:$HOME/.sst/bin
 
+      # jenv setup
+      export PATH="$HOME/.jenv/bin:$PATH"
+      eval "$(jenv init -)"
+
       # killport function
       killport() {
         for port in "$@"; do

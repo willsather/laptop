@@ -15,15 +15,6 @@
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
-    vim
-    bruno
-    lazydocker
-    lazygit
-    gh
-    go
-    python3
-    rustc
-    rustup
     jetbrains-mono
     slack
   ];
@@ -45,6 +36,20 @@
 
     # `brew install`
     brews = [
+      "vim"
+      "lazydocker"
+      "lazygit"
+      "gh"
+      "go"
+      "python3"
+      "rust"
+
+      # software
+      "openjdk@23"
+      "openjdk@21"
+      "openjdk@17"
+      "openjdk@11"
+      "jenv"
     ];
 
     # `brew install --cask`
@@ -52,11 +57,12 @@
     casks = [
       # "1password"
       "1password-cli"
-      # "google-chrome"
-      # "slack"
-      "jetbrains-toolbox"
-      "visual-studio-code"
+      "bruno"
       # "font-jetbrains-mono"
+      # "google-chrome"
+      "jetbrains-toolbox"
+      # "slack"
+      "visual-studio-code"
       # "zoom"
     ];
   };

@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  home.enableNixpkgsReleaseCheck = false; # FIXME: remove once versions 25.* match
+
   home.packages = with pkgs; [
     # archives
     zip # zip archiver
