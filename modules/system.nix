@@ -57,7 +57,7 @@
 
         persistent-apps = [
           "/System/Applications/Launchpad.app"
-          "/Applications/Google Chrome.app"
+          "/Applications/Arc.app"
           "/Applications/Slack.app"
           "/Applications/IntelliJ IDEA Ultimate.app"
           "/Applications/iTerm.app"
@@ -72,6 +72,11 @@
         TrackpadRightClick = true; # enable two finger right click
         TrackpadThreeFingerDrag = true; # enable three finger drag
         TrackpadThreeFingerTapGesture = 0; # disable data detector
+      };
+
+      # turn off window margins
+      WindowManager = {
+        EnableTiledWindowMargins = false;
       };
 
       NSGlobalDomain = {

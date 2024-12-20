@@ -14,6 +14,7 @@
   # But on macOS, it's less stable than homebrew.
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
+
   environment.systemPackages = with pkgs; [
     jetbrains-mono
     slack
@@ -27,7 +28,7 @@
     enable = true;
 
     onActivation = {
-      autoUpdate = false;
+      autoUpdate = true;
     };
 
     taps = [
@@ -53,17 +54,29 @@
     ];
 
     # `brew install --cask`
-    # FIXME: uninstall and reinstall these apps with brew
     casks = [
-      # "1password"
+      # productive
+      "1password"
       "1password-cli"
       "bruno"
-      # "font-jetbrains-mono"
+      "raycast"
+
+      # browsers
+      "arc"
+      # "firefox"
       # "google-chrome"
+      # "zen-browser"
+
+      # IDE
       "jetbrains-toolbox"
-      # "slack"
       "visual-studio-code"
+
+      # communiction
+      # "slack"
       # "zoom"
+
+      # other
+      # "font-jetbrains-mono"
     ];
   };
 }

@@ -6,7 +6,7 @@ then execute a single command to apply the configuration.
 
 ## Prerequisites
 
-1. Install Dependencies
+1. Patiently Install Dependencies
    ```bash
    xcode-select --install
    ```
